@@ -17,6 +17,9 @@ myApp.controller("loginController", ['$scope', '$location', 'AuthService', funct
       });
    };
 }]);
+myApp.controller("homeController", ['$scope', '$rootScope', function($scope, $rootScope){
+   console.log($rootScope.userData);
+}])
 
 myApp.controller('logoutController', ['$scope', '$location', 'AuthService', function ($scope, $location, AuthService) {
 

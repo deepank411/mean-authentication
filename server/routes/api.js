@@ -53,13 +53,16 @@ router.post('/login', function(req, res, next) {
          });
       }
       req.logIn(user, function(err) {
+         console.log(user);
          if (err) {
             return res.status(500).json({
                err: 'Could not log in user'
             });
          }
          res.status(200).json({
-            status: 'Login successful!'
+            status: 'Login successful!',
+            user_name: user.name,
+            username: user.username
          });
       });
    })(req, res, next);

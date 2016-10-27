@@ -4,6 +4,7 @@ myApp.config(function ($routeProvider) {
    $routeProvider
    .when('/', {
       templateUrl: 'partials/home.html',
+      controller: 'homeController',
       access: {restricted: true}
    })
    .when('/login', {
@@ -47,8 +48,8 @@ myApp.run(function ($rootScope, $location, $route, AuthService) {
 });
 
 angular.module('myApp').factory('AuthService',
-['$q', '$timeout', '$http',
-function ($q, $timeout, $http) {
+['$q', '$timeout', '$http', '$rootScope',
+function ($q, $timeout, $http, $rootScope) {
 
    // create user variable
    var user = null;
@@ -96,6 +97,8 @@ function ($q, $timeout, $http) {
       {username: username, password: password})
       // handle success
       .success(function (data, status) {
+         console.log(data);
+         $rootScope.userData = data;
          if(status === 200 && data.status){
             user = true;
             deferred.resolve();
