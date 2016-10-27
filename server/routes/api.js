@@ -16,19 +16,30 @@ router.get("/status", function(req, res){
 });
 
 router.post('/register', function(req, res) {
-   User.register(new User({ username: req.body.username, name: req.body.name }),
-   req.body.password, function(err, account) {
-      if (err) {
-         return res.status(500).json({
-            err: err
+   User.findOne({username: req.body.username}, function(err, user){
+      console.log(user);
+      if(user){
+         return res.status(200).json({
+            status: 'A user with this username already exists!'
          });
       }
-      passport.authenticate('local')(req, res, function () {
-         return res.status(200).json({
-            status: 'Registration successful!'
+      else{
+         User.register(new User({ username: req.body.username, name: req.body.name }),
+         req.body.password, function(err, account) {
+            console.log(account);
+            if (err) {
+               return res.status(500).json({
+                  err: err
+               });
+            }
+            passport.authenticate('local')(req, res, function () {
+               return res.status(200).json({
+                  status: 'Registration successful!'
+               });
+            });
          });
-      });
-   });
+      }
+   })
 });
 
 router.post('/login', function(req, res, next) {
