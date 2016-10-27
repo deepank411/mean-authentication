@@ -15,9 +15,8 @@ router.get("/status", function(req, res){
    });
 });
 
-
 router.post('/register', function(req, res) {
-   User.register(new User({ username: req.body.username }),
+   User.register(new User({ username: req.body.username, name: req.body.name }),
    req.body.password, function(err, account) {
       if (err) {
          return res.status(500).json({
